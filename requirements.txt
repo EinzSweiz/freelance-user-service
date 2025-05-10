@@ -1,0 +1,30 @@
+# --- Core ---
+fastapi
+uvicorn[standard]
+pydantic
+python-decouple  # .env configs
+
+# --- Database: PostgreSQL ---
+asyncpg
+sqlalchemy[asyncio]  # ORM for PostgreSQL
+alembic  # Migrations
+psycopg2-binary
+# --- Auth / Security ---
+passlib[bcrypt]  # Password hashing
+python-jose[cryptography]  # JWT handling
+email-validator  # for validating emails
+
+# --- Redis ---
+redis>=4.2.0  # for token blacklist/cache
+aioredis  # if needed for advanced pub/sub (deprecated but used in some libs)
+
+# --- Kafka ---
+aiokafka  # async Kafka producer
+
+# --- MongoDB (optional for logs or audit trail) ---
+motor  # async MongoDB driver
+
+# --- Testing ---
+pytest
+httpx
+pytest-asyncio
