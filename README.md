@@ -41,7 +41,7 @@ Built using **FastAPI**, it includes JWT-based OAuth2 authentication, Redis-powe
 ---
 
 ## 📂 Folder Structure
-
+```
 app/
 ├── cmd/ # Entry point
 ├── config/ # Settings and Kafka config
@@ -49,7 +49,7 @@ app/
 ├── infrastructure/ # DB, Kafka, Redis, security
 ├── presentation/ # Routers & handlers
 ├── services/ # Business logic
-
+```
 ## 🧪 Endpoints
 
 - `POST /auth/register` — register new user
