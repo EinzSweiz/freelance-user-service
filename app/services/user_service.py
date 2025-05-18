@@ -8,7 +8,6 @@ from app.infrastructure.kafka.kafka_producer import KafkaProducer
 from app.infrastructure.redis.redis_token_service import RedisTokenBlacklist
 from app.config.kafka_config import KAFKA_TOPICS
 from datetime import datetime
-
 class UserService:
     def __init__(self, user_repo: AbstractUserRepository, logger: AbstractLogger, kafka_producer: KafkaProducer):
         self.user_repo = user_repo

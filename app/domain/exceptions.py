@@ -10,9 +10,10 @@ class UserNotExists(UserServiceException):
     def __init__(self, user_id: str) -> None:
         super().__init__(f"User with ID {user_id} does not exist.")
 
-class InvalidCredentials(UserServiceException):
-    def __init__(self) -> None:
-        super().__init__("Invalid credentials provided.")
+class InvalidCredentials(Exception):
+    def __init__(self, message: str = "Invalid credentials"):
+        self.message = message
+        super().__init__(self.message)
 
 class TokenRevoked(UserServiceException):
     def __init__(self) -> None:

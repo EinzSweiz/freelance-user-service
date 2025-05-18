@@ -33,7 +33,7 @@ class KafkaProducer:
             self.logger.info("Stopped Kafka producer")
 
     async def send(self, topic: str, event: dict):
-        if not self.producer or self.producer._closed.done():
+        if not self.producer or self.producer._closed:
             self.logger.error("Kafka producer is not active")
             return
 

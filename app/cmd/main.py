@@ -12,8 +12,27 @@ from app.infrastructure.kafka.kafka_topic_manager import KafkaTopicManager
 from app.infrastructure.kafka.kafka_producer import KafkaProducer
 from app.config.kafka_config import KAFKA_TOPICS
 from app.infrastructure.logger.logger import get_logger
+from app.infrastructure.db.db_session import engine
+from sqlalchemy import text
+import asyncio
+import asyncpg
+from sqlalchemy.exc import OperationalError, DBAPIError
+logger = get_logger("UserService")
+async def wait_for_db(max_retries=10, delay=2):
+    for attempt in range(max_retries):
+        try:
+            async with engine.connect() as conn:
+                await conn.execute(text("SELECT 1"))
+                logger.info("✅ Database is ready!")
+                return
+        except (OperationalError, asyncpg.InvalidCatalogNameError, DBAPIError) as e:
+            logger.warning(f"❌ DB not ready (attempt {attempt + 1}/{max_retries}) — {e}")
+            await asyncio.sleep(delay)
+
+    raise RuntimeError("❌ Could not connect to the database after retries")
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    await wait_for_db()
     logger = get_logger("lifespan")
     logger.info("FastAPI lifespan started")
 
